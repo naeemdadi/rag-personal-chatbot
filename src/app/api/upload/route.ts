@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
   const {
     GOOGLE_API_KEY,
     ASTRA_DB_KEYSPACE,
-    ASTRA_DB_COLLECTION_2: ASTRA_DB_COLLECTION,
+    ASTRA_DB_COLLECTION,
     ASTRA_DB_API_ENDPOINT,
     ASTRA_DB_APPLICATION_TOKEN,
   } = process.env;
