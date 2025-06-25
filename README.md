@@ -1,24 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RAG Personal AI Assistant
+
+A full-stack Retrieval-Augmented Generation (RAG) web application that acts as your personal AI assistant. Upload documents (PDF, TXT, DOCX) and chat with an AI that can reference your files.
+
+## Features
+- **Chat UI:** Clean, responsive chat interface (Next.js, React, Tailwind CSS)
+- **File Upload:** UploadThing-style file upload for PDF, TXT, DOCX
+- **Text Extraction:** Extracts and chunks text from uploaded files
+- **Embeddings:** Uses OpenAI's `text-embedding-3-small` for vectorization
+- **Vector DB:** Stores embeddings and chunks in **DataStax Astra DB** (cloud, managed)
+- **RAG Flow:** Retrieves relevant context and generates answers with GPT-4
+
+## Tech Stack
+- **Frontend:** Next.js (React, App Router, Tailwind CSS)
+- **Backend:** Next.js API routes (Node.js)
+- **Embeddings & LLM:** OpenAI API
+- **Vector DB:** [DataStax Astra DB](https://docs.datastax.com/en/astra/astra-db-vector/vector-intro.html) (cloud, managed)
+- **File Parsing:** pdf-parse, mammoth, Node.js fs
 
 ## Getting Started
 
-First, run the development server:
-
+### 1. Clone & Install
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Environment Variables
+Create a `.env.local` file:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+GOOGLE_API_KEY='your-token'
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# DataStax Astra DB
+ASTRA_DB_API_ENDPOINT=https://<your-db-id>-<region>.apps.astra.datastax.com
+ASTRA_DB_APPLICATION_TOKEN=your-app-token
+ASTRA_DB_KEYSPACE=your_keyspace
+ASTRA_DB_COLLECTION=personal-assistant
+```
+
+# UploadThing API Key
+UPLOADTHING_TOKEN='your-token'
+
+### 3. Start the App
+```bash
+pnpm run dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000)
+
+## Switching to Pinecone
+This boilerplate uses **DataStax Astra DB** for simplicity and local development. To use [Pinecone](https://www.pinecone.io/):
+- Replace DataStax Astra DB logic in `src/app/api/upload/route.ts` and `src/app/api/chat/route.ts` with Pinecone SDK calls.
+- Add your Pinecone API key and environment to `.env.local`.
+- See [Pinecone docs](https://docs.pinecone.io/docs/quickstart) for integration details.
+
+## Security & Production
+- Never expose your OpenAI or Astra DB tokens in the browser.
+- Add authentication for multi-user scenarios.
+- For large files or production, use persistent DataStax Astra DB collections.
+
+## License
+MIT
 
 ## Learn More
 
